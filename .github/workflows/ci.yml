@@ -14,14 +14,15 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        # 💡 FIX: Set working directory to the repository root (./) 
-        working-directory: ./ 
+        # 💡 FIX: Set working directory to the subfolder containing package.json (e.g., ./src)
+        working-directory: ./src 
         run: npm install
 
       - name: Run tests (or Lint)
-        working-directory: ./
+        working-directory: ./src 
         run: echo "Simulated CI Tests Passed!"
 
       - name: Build Docker Image (Optional but good practice)
-        working-directory: ./
+        # Note: If Dockerfile is in the root, you may need a different path here, but let's focus on npm first.
+        working-directory: ./src 
         run: docker build .
