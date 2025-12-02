@@ -16,7 +16,7 @@ spec:
         app: kube-lab-app
     spec:
       containers:
-      - name: kube-lab-container
+      - name: kube-lab-app
         image: kube-lab-app:v1 # Local image name
         ports:
         - containerPort: 8080 # This must match the EXPOSE in Dockerfile/app

@@ -1,15 +1,12 @@
-# Dockerfile
-# Use a minimal Node.js image
-FROM node:20-alpine
+FROM node:18-alpine
 
-# Create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copy application code
-COPY app.js .
+COPY app/package*.json ./
+RUN npm install
 
-# The port the app listens on
+COPY app/ .
+
 EXPOSE 8080
 
-# Run the application
-CMD ["node", "app.js"]
+CMD ["npm", "start"]
