@@ -11,14 +11,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Match your development environment
+          node-version: '20'
 
       - name: Install dependencies
-        run: npm install # Only needed if using package.json and modules
+        # Assuming your previous fix was working, if not, add working-directory: ./ here
+        run: npm install
 
       - name: Run tests (or Lint)
-        # In a real app, this would be 'npm test'
         run: echo "Simulated CI Tests Passed!"
 
       - name: Build Docker Image (Optional but good practice)
+        # RETHYPE THIS LINE CAREFULLY TO AVOID TRAILING SPACES OR HIDDEN CHARACTERS
         run: docker build .
