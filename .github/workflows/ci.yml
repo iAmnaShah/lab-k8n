@@ -20,17 +20,23 @@ jobs:
           node-version: '20'
 
       # 3. Debug - show files (optional but helpful)
-      - name: List files
+      - name: List files (Will now run before npm install)
         run: ls -la
+        # Adding working-directory: ./ here just to be safe
+        working-directory: ./ 
 
       # 4. Install dependencies
       - name: Install dependencies
+        # 💡 FINAL FIX: Explicitly set working directory to the root of the repository
+        working-directory: ./ 
         run: npm install
 
       # 5. Run tests / Lint
       - name: Run tests
+        working-directory: ./ 
         run: echo "✅ Simulated CI Tests Passed"
 
       # 6. Build Docker Image
       - name: Build Docker Image
+        working-directory: ./ 
         run: docker build -t lab-k8-image .
