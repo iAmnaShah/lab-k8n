@@ -1,28 +1,36 @@
-# .github/workflows/ci.yml
 name: CI Test
-on: [push]
+
+on:
+  push:
+  pull_request:
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Set up Node.js
+    steps:
+      # 1. Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
+      # 3. Debug - show files (optional but helpful)
+      - name: List files
+        run: ls -la
+
+      # 4. Install dependencies
       - name: Install dependencies
-        # 💡 FIX: Set working directory to the subfolder containing package.json (e.g., ./src)
-        working-directory: ./
         run: npm install
 
-      - name: Run tests (or Lint)
-        working-directory: ./ 
-        run: echo "Simulated CI Tests Passed!"
+      # 5. Run tests / Lint
+      - name: Run tests
+        run: echo "✅ Simulated CI Tests Passed"
 
-      - name: Build Docker Image (Optional but good practice)
-        # Note: If Dockerfile is in the root, you may need a different path here, but let's focus on npm first.
-        working-directory: ./
-        run: docker build .
+      # 6. Build Docker Image
+      - name: Build Docker Image
+        run: docker build -t lab-k8-image .
