@@ -1,0 +1,13 @@
+# k8s/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-lab-service
+spec:
+  type: NodePort
+  selector:
+    app: kube-lab-app # This matches the label in the Deployment template
+  ports:
+    - port: 8080      # The port the service exposes internally
+      targetPort: 8080  # The port the container is listening on (from Deployment)
+      nodePort: 30080 # The port on the host machine (must be 30000-32767)
