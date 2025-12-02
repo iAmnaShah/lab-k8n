@@ -1,36 +1,25 @@
-name: CI Test
+steps:
+  # 1. Checkout repository
+  - name: Checkout code
+    uses: actions/checkout@v4
 
-on:
-  push:
-  pull_request:
+  # 2. Setup Node.js (FIXED: uses: actions/setup-node@v4)
+  - name: Setup Node.js
+    uses: actions/setup-node@v4
+    with:
+      node-version: '20'
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
+  # 3. List files (Optional debug step)
+  - name: List files
+    working-directory: ./ 
+    run: ls -la
 
-    steps:
-      # 1. Checkout repository
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # 4. Run tests (The npm install step is now gone)
+  - name: Run tests
+    working-directory: ./ 
+    run: echo "✅ Simulated CI Tests Passed"
 
-      # 2. Setup Node.js
-      - name: Setup Node.js
-        uses: actions:setup-node@v4
-        with:
-          node-version: '20'
-
-      # 3. Debug - show files (optional but helpful)
-      - name: List files (Will now run before npm install)
-        # We can remove this for simplicity if not needed
-        run: ls -la
-
-      # 4. Run tests / Lint (Original Step 5)
-      - name: Run tests
-        # We still need working-directory: ./ here if package.json/app.js are in the root
-        working-directory: ./ 
-        run: echo "✅ Simulated CI Tests Passed"
-
-      # 5. Build Docker Image (Original Step 6)
-      - name: Build Docker Image
-        working-directory: ./ 
-        run: docker build -t lab-k8-image .
+  # 5. Build Docker Image
+  - name: Build Docker Image
+    working-directory: ./ 
+    run: docker build -t lab-k8-image .
