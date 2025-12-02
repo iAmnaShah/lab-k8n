@@ -1,42 +1,22 @@
 name: CI Test
 
-on:
-  push:
-  pull_request:
+on: [push]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
-      # 1. Checkout repository
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
-      # 2. Setup Node.js (Prevent automatic dependency checking)
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          node-version: '20'
-          # 💡 CRITICAL FIX: Tell the action we aren't caching/using NPM dependencies
-          cache: 'npm' # Note: We need this line, even if we don't install anything
-      
-      # 3. List files 
-      - name: List files
-        working-directory: ./ 
-        run: ls -la
+          node-version: 18
 
-      # 4. Run tests 
-      - name: Run tests
-        working-directory: ./ 
-        run: echo "✅ Simulated CI Tests Passed"
-
-      # 5. Build Docker Image
-      - name: Build Docker Image
-        working-directory: ./ 
-        run: docker build -t lab-k8-image .
-
-      #6. Dependencies:
       - name: Install dependencies
         run: npm install
-        working-directory: app
+        working-directory: app   # <- add this
+
+      - name: Run tests
+        run: npm test
+        working-directory: app   # <- add this
