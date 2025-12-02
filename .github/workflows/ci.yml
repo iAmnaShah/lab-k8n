@@ -14,12 +14,14 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        # Assuming your previous fix was working, if not, add working-directory: ./ here
+        # 💡 FIX: Set working directory to the repository root (./) 
+        working-directory: ./ 
         run: npm install
 
       - name: Run tests (or Lint)
+        working-directory: ./
         run: echo "Simulated CI Tests Passed!"
 
       - name: Build Docker Image (Optional but good practice)
-        # RETHYPE THIS LINE CAREFULLY TO AVOID TRAILING SPACES OR HIDDEN CHARACTERS
+        working-directory: ./
         run: docker build .
